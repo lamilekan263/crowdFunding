@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.18;
 
 
 contract CrowdFunding {
@@ -22,7 +22,7 @@ contract CrowdFunding {
 
 
     function createCampaign(address _owner, string memory _title, string memory _description, uint256 _target, uint256 _deadline)  external returns(uint256){
-        Campaign campaign = campaigns[numberOfCampaigns];
+        Campaign storage campaign = campaigns[numberOfCampaigns];
 
         require(campaign.deadline < block.timestamp, 'The deadline should be a date in the future');
 
@@ -41,9 +41,9 @@ contract CrowdFunding {
     function donateToCampaign(uint256 _id) public payable {
         uint256 amount = msg.value;
 
-        Campaign campaign = campaigns[_id];
+        Campaign storage campaign = campaigns[_id];
         campaign.donators.push(msg.sender);
-        campaign.donators.push(amount);
+        campaign.donations.push(amount);
 
         (bool sent,) = payable(campaign.owner).call{value: amount}("");
 
@@ -53,11 +53,11 @@ contract CrowdFunding {
     }
 
 
-    function getDonators(uint256 _id) view public returns(address[] memory uint256[] memory) {
+    function getDonators(uint256 _id) view public returns(address[] memory, uint256[] memory) {
         return (
             campaigns[_id].donators,
             campaigns[_id].donations
-        )
+        );
     }
 
 
@@ -72,5 +72,5 @@ contract CrowdFunding {
          return allCampaigns;
     }
 
-    
+
 }

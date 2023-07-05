@@ -1,18 +1,18 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
 
 // nterbal
-import {Navbar, Footer} from '../Components'
+import { Navbar, Footer } from '../Components';
 
+import { CrowdFundingProvider } from '../Context/CrowdFunding';
 
-
-function MyApp({ Component, pageProps }) {
+function MyApp ({ Component, pageProps }) {
   return (
-    <>
+    <CrowdFundingProvider>
       <Navbar />
       <Component { ...pageProps } />
-      <Footer/>
-    </>
-  )
+      <Footer />
+    </CrowdFundingProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
