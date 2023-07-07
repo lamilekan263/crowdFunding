@@ -1,7 +1,7 @@
 import React from "react";
 
-const PupUp = () => {
-  return <div>PupUp</div>;
+const PopUp = () => {
+  return <div>PopUp</div>;
 };
 
-export default PupUp;
+export default PopUp;
